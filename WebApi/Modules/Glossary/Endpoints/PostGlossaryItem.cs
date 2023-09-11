@@ -15,14 +15,14 @@ namespace Glossary.Web.Api.Modules.Glossary.Endpoints
                 return Results.ValidationProblem(validationResult.ToDictionary());
             }
 
-            var newTerm = GlossaryItemDtoX.FromDto(item);
-
             try
             {
+                var newTerm = GlossaryItemDtoX.FromDto(item);
                 var newId = await glossaryService.Insert(newTerm);
                 return Results.Created($"/glossaryitems/{newId}", GlossaryItemDtoX.ToDto(newTerm));
 
-            } catch (Exception)
+            } 
+            catch (Exception)
             {
                 return Results.Problem("Internal Application Error");
             }

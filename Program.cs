@@ -1,6 +1,6 @@
 using Glossary.Web.Api.Modules.Glossary;
 using Glossary.Web.Api.Modules.Glossary.Services;
-using Glossary.WebApi.Helpers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +12,6 @@ builder.Services.RegisterGlossaryModule();
 
 var app = builder.Build();
 
-// global error handler
-app.UseMiddleware<ErrorHandlerMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

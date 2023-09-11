@@ -28,23 +28,15 @@ namespace Glossary.Web.Api.Modules.Glossary.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns>A count of the number of records affected and 0 of unsuccessful</returns>
-        /// <exception cref="Exception"></exception>
         public async Task<int> DeleteById(int id)
         {
-            try
+            var existingItem = await GetById(id);
+            if (existingItem != null)
             {
-                var existingItem = await GetById(id);
-                if (existingItem != null)
-                {
-                    _dbContext.Terms.Remove(existingItem);
-                    return await _dbContext.SaveChangesAsync();
-                }
-                return 0;
+                _dbContext.Terms.Remove(existingItem);
+                return await _dbContext.SaveChangesAsync();
             }
-            catch (DbException exc)
-            {
-                throw new Exception(exc.Message);
-            }
+            return 0;
         }
 
         public async Task<Term?> GetById(int id)
@@ -61,20 +53,12 @@ namespace Glossary.Web.Api.Modules.Glossary.Services
         /// </summary>
         /// <param name="term">term.termId value is ignored for inserts</param>
         /// <returns>The new Id of the newly created Term record </returns>
-        /// <exception cref="Exception"></exception>
         public async Task<int> Insert(Term term)
         {
-            try
-            {
-                term.Id = 0;
-                await _dbContext.Terms.AddAsync(term);
-                await _dbContext.SaveChangesAsync();
-                return term.Id;
-            }
-            catch (DbException exc)
-            {
-                throw new Exception(exc.Message);
-            }
+            term.Id = 0;
+            await _dbContext.Terms.AddAsync(term);
+            await _dbContext.SaveChangesAsync();
+            return term.Id;
         }
 
 
@@ -83,23 +67,15 @@ namespace Glossary.Web.Api.Modules.Glossary.Services
         /// </summary>
         /// <param name="term">term.termId property used as PK key to identify term for updating</param>
         /// <returns>The number of affected records</returns>
-        /// <exception cref="Exception"></exception>
         public async Task<int> Update(Term term)
         {
-            try
+            var existingItem = await GetById(term.Id);
+            if (existingItem != null)
             {
-                var existingItem = await GetById(term.Id);
-                if (existingItem != null)
-                {
-                    _dbContext.Terms.Update(existingItem);
-                    return await _dbContext.SaveChangesAsync();
-                }
-                return 0;
-
-            } catch (DbException exc)
-            {   
-                throw new Exception(exc.Message);
+                _dbContext.Terms.Update(existingItem);
+                return await _dbContext.SaveChangesAsync();
             }
+            return 0;
         }
         
     }

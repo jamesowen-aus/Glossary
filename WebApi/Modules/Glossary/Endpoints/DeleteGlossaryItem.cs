@@ -1,5 +1,4 @@
 ﻿using Glossary.Web.Api.Modules.Glossary.Interfaces;
-using Glossary.Web.Api.Modules.Glossary.Services;
 
 namespace Glossary.Web.Api.Modules.Glossary.Endpoints
 {
@@ -20,9 +19,9 @@ namespace Glossary.Web.Api.Modules.Glossary.Endpoints
 
                 return Results.NotFound($"Not Found: TermId {termId}");
 
-            } catch (Exception)
+            } 
+            catch (Exception)
             {
-                //TODO: Implement Logging
                 return Results.Problem("Internal Application Error");
             }
         }

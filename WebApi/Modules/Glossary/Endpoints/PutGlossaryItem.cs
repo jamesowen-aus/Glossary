@@ -2,7 +2,6 @@
 using Glossary.Web.Api.Modules.Glossary.Dtos;
 using Glossary.Web.Api.Modules.Glossary.Helpers;
 using Glossary.Web.Api.Modules.Glossary.Interfaces;
-using Glossary.Web.Api.Modules.Glossary.Services;
 
 namespace Glossary.Web.Api.Modules.Glossary.Endpoints
 {
@@ -29,7 +28,8 @@ namespace Glossary.Web.Api.Modules.Glossary.Endpoints
 
                 return Results.NotFound(termId);
 
-            } catch (Exception)
+            } 
+            catch (Exception)
             {
                 return Results.Problem("Internal Application Error");
             }
